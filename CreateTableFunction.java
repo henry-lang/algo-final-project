@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 
 public class CreateTableFunction implements Function {
     public JsonValue call(Database database, List<JsonValue> arguments) {
@@ -13,7 +14,7 @@ public class CreateTableFunction implements Function {
         for(int i = 1; i < arguments.size(); i++) {
             JsonArray obj = (JsonArray) arguments.get(i);
 
-            columns.add(new Column());
+            columns.add(Column.fromJsonArray(obj));
         }
 
         return new JsonNull();

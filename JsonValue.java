@@ -3,23 +3,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JsonValue {}
-class JsonObject extends JsonValue {
-    Map<String, JsonValue> map = new HashMap<>();
+public interface JsonValue {}
+class JsonObject extends HashMap<String, JsonValue> implements JsonValue {
+    public JsonObject() {
+        super();
+    }
 }
-class JsonArray extends JsonValue {
-    List<JsonValue> list = new ArrayList<>();
+
+class JsonArray extends ArrayList<JsonValue> implements JsonValue {
+    public JsonArray() {
+        super();
+    }
 }
-class JsonString extends JsonValue {
+
+class JsonString implements JsonValue {
     String value;
-    JsonString(String value) { this.value = value; }
+
+    public JsonString(String value) {
+        this.value = value;
+    }
 }
-class JsonNumber extends JsonValue {
-    Number value;
-    JsonNumber(Number value) { this.value = value; }
+
+class JsonNumber implements JsonValue {
+    int value;
+
+    public JsonNumber(int value) {
+        this.value = value;
+    }
 }
-class JsonBoolean extends JsonValue {
-    Boolean value;
-    JsonBoolean(Boolean value) { this.value = value; }
+
+class JsonBoolean implements JsonValue {
+    boolean value;
+
+    public JsonBoolean(boolean value) {
+        this.value = value;
+    }
 }
-class JsonNull extends JsonValue {}
+class JsonNull implements JsonValue {}

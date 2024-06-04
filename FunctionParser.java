@@ -70,7 +70,7 @@ public class FunctionParser {
             return new JsonNull();
         } else {
             try {
-                return new JsonNumber(Double.parseDouble(value));
+                return new JsonNumber(Integer.parseInt(value));
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Invalid JSON value: " + value);
             }
@@ -110,13 +110,13 @@ public class FunctionParser {
                     break;
                 case ',':
                     if (braceCount == 0 && bracketCount == 0) {
-                        jsonObject.map.put(key, parseJsonValue(json.substring(startIndex, i).trim()));
+                        jsonObject.put(key, parseJsonValue(json.substring(startIndex, i).trim()));
                         startIndex = i + 1;
                     }
                     break;
             }
         }
-        jsonObject.map.put(key, parseJsonValue(json.substring(startIndex).trim()));
+        jsonObject.put(key, parseJsonValue(json.substring(startIndex).trim()));
         return jsonObject;
     }
 
@@ -145,13 +145,13 @@ public class FunctionParser {
                     break;
                 case ',':
                     if (braceCount == 0 && bracketCount == 0) {
-                        jsonArray.list.add(parseJsonValue(json.substring(startIndex, i).trim()));
+                        jsonArray.add(parseJsonValue(json.substring(startIndex, i).trim()));
                         startIndex = i + 1;
                     }
                     break;
             }
         }
-        jsonArray.list.add(parseJsonValue(json.substring(startIndex).trim()));
+        jsonArray.add(parseJsonValue(json.substring(startIndex).trim()));
         return jsonArray;
     }
 
@@ -161,7 +161,7 @@ public class FunctionParser {
             StringBuilder sb = new StringBuilder();
             sb.append("{");
             boolean first = true;
-            for (Map.Entry<String, JsonValue> entry : jsonObject.map.entrySet()) {
+            for (Map.Entry<String, JsonValue> entry : jsonObject.entrySet()) {
                 if (!first) {
                     sb.append(", ");
                 }
@@ -175,7 +175,7 @@ public class FunctionParser {
             StringBuilder sb = new StringBuilder();
             sb.append("[");
             boolean first = true;
-            for (JsonValue element : jsonArray.list) {
+            for (JsonValue element : jsonArray) {
                 if (!first) {
                     sb.append(", ");
                 }
@@ -187,9 +187,9 @@ public class FunctionParser {
         } else if (value instanceof JsonString) {
             return "\"" + ((JsonString) value).value + "\"";
         } else if (value instanceof JsonNumber) {
-            return ((JsonNumber) value).value.toString();
+            return "" + ((JsonNumber) value).value;
         } else if (value instanceof JsonBoolean) {
-            return ((JsonBoolean) value).value.toString();
+            return "" + ((JsonBoolean) value).value;
         } else if (value instanceof JsonNull) {
             return "null";
         }
