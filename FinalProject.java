@@ -23,7 +23,9 @@ public class FinalProject {
                 }
 
                 JsonValue result = FunctionExecutor.executeFunction(database, parsedFunction);
-                System.out.println(FunctionParser.jsonValueToString(result));
+                if(!(result instanceof JsonNull)) {
+                    System.out.println(FunctionParser.jsonValueToString(result));
+                }
             } catch (Exception e) {
                 JsonValue errorVal = FunctionError.errorJson(e.toString());
                 System.out.println(FunctionParser.jsonValueToString(errorVal));

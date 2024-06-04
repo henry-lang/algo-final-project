@@ -6,6 +6,7 @@ public class FunctionExecutor {
     static {
         FUNCTIONS.put("exit", new ExitFunction());
         FUNCTIONS.put("create_table", new CreateTableFunction());
+        FUNCTIONS.put("insert", new InsertFunction());
     }
 
     public static JsonValue executeFunction(Database database, ParsedFunction parsedFunction) {
